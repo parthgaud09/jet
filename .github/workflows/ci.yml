@@ -1,11 +1,10 @@
 name: First CI
-on: push
+on: [push, pull_request]
 jobs:
-  greet:
-   runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4
-    - name: Show the commit
-      run: echo "Commit: $GITHUB_SHA "
-    - name: List the files
-      run: ls -la
+  depoly:
+     needs: test
+     runs-on: ubuntu-latest
+     if: github.ref == 'refs/heads/main'
+     steps:
+       - uses: actions/checkoutv@4
+       - run: echo "Deploying because this is main"
